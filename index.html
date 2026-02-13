@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shubh Maheshwari</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           EDITORIAL OCEAN SUNRISE
+           Magazine-inspired layout with asymmetric grids
+        ═══════════════════════════════════════════════════════════════ */
+        
+        :root {
+            /* Light theme (default) */
+            --background: 48 28% 96%;
+            --foreground: 190 20% 18%;
+            --card: 45 24% 91%;
+            --card-foreground: 190 20% 18%;
+            --primary: 190 35% 42%;
+            --primary-foreground: 48 28% 96%;
+            --secondary: 45 22% 85%;
+            --secondary-foreground: 190 20% 18%;
+            --muted: 42 18% 85%;
+            --muted-foreground: 190 15% 46%;
+            --accent: 185 45% 48%;
+            --accent-foreground: 48 28% 96%;
+            --interaction: 185 55% 45%;
+            --interaction-foreground: 0 0% 100%;
+            --border: 42 15% 83%;
+            
+            --radius: 0.5rem;
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-sans: 'Outfit', system-ui, sans-serif;
+
+            --type-display-xl: clamp(3.5rem, 10vw, 8rem);
+            --type-display-l: clamp(2.5rem, 6vw, 5rem);
+            --type-display-m: clamp(1.75rem, 3.5vw, 3rem);
+            --type-display-s: clamp(1.25rem, 2vw, 1.75rem);
+            --type-body-l: clamp(1.1rem, 1.5vw, 1.25rem);
+            --type-body-m: 1rem;
+            --type-caption: 0.8125rem;
+            --type-overline: 0.6875rem;
+        }
+
+        /* Dark theme */
+        [data-theme="dark"] {
+            --background: 190 20% 11%;
+            --foreground: 45 24% 87%;
+            --card: 190 18% 16%;
+            --card-foreground: 45 24% 87%;
+            --primary: 185 55% 58%;
+            --primary-foreground: 190 20% 11%;
+            --secondary: 190 15% 25%;
+            --secondary-foreground: 45 24% 87%;
+            --muted: 190 15% 25%;
+            --muted-foreground: 185 25% 63%;
+            --accent: 180 60% 62%;
+            --accent-foreground: 190 20% 11%;
+            --interaction: 180 60% 62%;
+            --interaction-foreground: 190 20% 11%;
+            --border: 190 15% 27%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-serif);
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            line-height: 1.7;
+            font-size: var(--type-body-l);
+            overflow-x: hidden;
+        }
+
+        /* Subtle grain texture */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.025;
+            z-index: 1000;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           LAYOUT CONTAINERS
+        ═══════════════════════════════════════════════════════════════ */
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(24px, 5vw, 80px);
+        }
+
+        .container--narrow {
+            max-width: 720px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           MASTHEAD — Minimal editorial header
+        ═══════════════════════════════════════════════════════════════ */
+
+        .masthead {
+            padding: clamp(32px, 6vh, 64px) 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .masthead__name {
+            font-family: var(--font-sans);
+            font-size: var(--type-overline);
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: hsl(var(--primary));
+        }
+
+        .masthead__meta {
+            font-family: var(--font-sans);
+            font-size: var(--type-overline);
+            color: hsl(var(--muted-foreground));
+            letter-spacing: 0.1em;
+            font-weight: 300;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           HERO — Asymmetric split layout
+        ═══════════════════════════════════════════════════════════════ */
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: clamp(48px, 8vw, 120px);
+            padding: clamp(64px, 10vh, 140px) 0;
+            align-items: center;
+        }
+
+        .hero__image-wrap {
+            position: relative;
+        }
+
+        .hero__image-wrap::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            border: 1px solid hsl(var(--accent) / 0.3);
+            border-radius: var(--radius);
+        }
+
+        .hero__image {
+            position: relative;
+            aspect-ratio: 4/5;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 
+                0 25px 50px -12px hsl(var(--primary) / 0.15),
+                0 0 0 1px hsl(var(--border));
+        }
+
+        .hero__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.95);
+        }
+
+        .hero__content {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .hero__overline {
+            font-family: var(--font-sans);
+            font-size: var(--type-overline);
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: hsl(var(--accent));
+        }
+
+        .hero__headline {
+            font-family: var(--font-serif);
+            font-size: var(--type-display-l);
+            font-weight: 600;
+            line-height: 1.1;
+            color: hsl(var(--foreground));
+        }
+
+        .hero__headline em {
+            font-style: italic;
+            color: hsl(var(--primary));
+        }
+
+        .hero__tagline {
+            font-family: var(--font-serif);
+            font-size: var(--type-body-l);
+            font-style: italic;
+            color: hsl(var(--muted-foreground));
+            max-width: 380px;
+            line-height: 1.8;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SECTION HEADERS — Editorial label style
+        ═══════════════════════════════════════════════════════════════ */
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            font-family: var(--font-sans);
+            font-size: var(--type-overline);
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: hsl(var(--accent));
+            margin-bottom: 48px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 32px;
+            height: 2px;
+            background: hsl(var(--accent));
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           ABOUT — Magazine-style editorial prose
+        ═══════════════════════════════════════════════════════════════ */
+
+        .about {
+            padding: clamp(80px, 12vh, 160px) 0;
+            border-top: 1px solid hsl(var(--border));
+        }
+
+        .about__grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: clamp(48px, 6vw, 100px);
+        }
+
+        .about__sidebar {
+            position: sticky;
+            top: 100px;
+            align-self: start;
+        }
+
+        .about__prose {
+            columns: 1;
+            column-gap: 48px;
+        }
+
+        .about__prose p {
+            margin-bottom: 1.5em;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .about__prose p:first-of-type::first-letter {
+            float: left;
+            font-size: 5rem;
+            line-height: 0.75;
+            margin: 8px 16px 0 0;
+            color: hsl(var(--primary));
+            font-weight: 700;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           NOTEBOOK — Marginal notes style
+        ═══════════════════════════════════════════════════════════════ */
+
+        .notebook {
+            padding: clamp(80px, 12vh, 160px) 0;
+            background: linear-gradient(
+                180deg,
+                hsl(var(--background)) 0%,
+                hsl(var(--card)) 20%,
+                hsl(var(--card)) 80%,
+                hsl(var(--background)) 100%
+            );
+        }
+
+        .notebook__grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: hsl(var(--border));
+            border: 1px solid hsl(var(--border));
+        }
+
+        .notebook__entry {
+            background: hsl(var(--background));
+            padding: clamp(24px, 4vw, 40px);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .notebook__label {
+            font-family: var(--font-sans);
+            font-size: var(--type-overline);
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: hsl(var(--muted-foreground));
+        }
+
+        .notebook__value {
+            font-family: var(--font-serif);
+            font-size: var(--type-body-m);
+            color: hsl(var(--foreground));
+            line-height: 1.6;
+        }
+
+        .notebook__value em {
+            font-style: italic;
+            color: hsl(var(--accent));
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           PROJECTS — Stacked cards with offset
+        ═══════════════════════════════════════════════════════════════ */
+
+        .projects {
+            padding: clamp(80px, 12vh, 160px) 0;
+        }
+
+        .projects__list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .project {
+            display: grid;
+            grid-template-columns: 140px 1fr auto;
+            gap: 32px;
+            align-items: baseline;
+            padding: 32px 0;
+            border-bottom: 1px solid hsl(var(--border));
+            transition: all 0.3s ease;
+        }
+
+        .project:hover {
+            padding-left: 16px;
+            border-color: hsl(var(--accent));
+        }
+
+        .project__status {
+            font-family: var(--font-sans);
+            font-size: var(--type-overline);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: hsl(var(--interaction));
+        }
+
+        .project__content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .project__title {
+            font-family: var(--font-serif);
+            font-size: var(--type-display-s);
+            font-weight: 600;
+            color: hsl(var(--foreground));
+        }
+
+        .project__desc {
+            font-size: var(--type-body-m);
+            color: hsl(var(--muted-foreground));
+            max-width: 500px;
+        }
+
+        .project__link {
+            font-family: var(--font-sans);
+            font-size: var(--type-caption);
+            font-weight: 500;
+            color: hsl(var(--primary));
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+
+        .project__link:hover {
+            color: hsl(var(--interaction));
+        }
+
+        .project__link::after {
+            content: '→';
+            transition: transform 0.2s;
+        }
+
+        .project:hover .project__link::after {
+            transform: translateX(4px);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           GALLERY — Masonry-inspired offset grid
+        ═══════════════════════════════════════════════════════════════ */
+
+        .gallery {
+            padding: clamp(80px, 12vh, 160px) 0;
+            background: hsl(var(--card));
+        }
+
+        .gallery__intro {
+            text-align: center;
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: var(--type-body-l);
+            color: hsl(var(--muted-foreground));
+            max-width: 480px;
+            margin: 0 auto 64px;
+        }
+
+        .gallery__grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: 80px;
+            gap: 16px;
+        }
+
+        .gallery__item {
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: hsl(var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-sans);
+            font-size: var(--type-overline);
+            color: hsl(var(--muted-foreground));
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery__item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px hsl(var(--primary) / 0.15);
+            z-index: 10;
+        }
+
+        .gallery__item--1 { grid-column: 1 / 6; grid-row: span 4; }
+        .gallery__item--2 { grid-column: 6 / 10; grid-row: span 3; }
+        .gallery__item--3 { grid-column: 10 / 13; grid-row: span 5; }
+        .gallery__item--4 { grid-column: 1 / 4; grid-row: span 3; }
+        .gallery__item--5 { grid-column: 4 / 8; grid-row: span 4; }
+        .gallery__item--6 { grid-column: 8 / 13; grid-row: span 3; }
+
+        /* ═══════════════════════════════════════════════════════════════
+           EDUCATION — Side-by-side cards
+        ═══════════════════════════════════════════════════════════════ */
+
+        .education {
+            padding: clamp(80px, 12vh, 160px) 0;
+        }
+
+        .education__grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .education__card {
+            background: hsl(var(--card));
+            padding: clamp(32px, 4vw, 48px);
+            border-radius: var(--radius);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .education__card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)));
+        }
+
+        .education__degree {
+            font-family: var(--font-serif);
+            font-size: var(--type-display-s);
+            font-weight: 600;
+            color: hsl(var(--foreground));
+            margin-bottom: 8px;
+        }
+
+        .education__school {
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: hsl(var(--primary));
+            margin-bottom: 16px;
+        }
+
+        .education__meta {
+            font-family: var(--font-sans);
+            font-size: var(--type-overline);
+            color: hsl(var(--muted-foreground));
+            letter-spacing: 0.05em;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           TIMELINE — Clean vertical line
+        ═══════════════════════════════════════════════════════════════ */
+
+        .timeline {
+            padding: clamp(80px, 12vh, 160px) 0;
+            background: linear-gradient(
+                90deg,
+                hsl(var(--background)) 0%,
+                hsl(var(--card)) 30%,
+                hsl(var(--card)) 70%,
+                hsl(var(--background)) 100%
+            );
+        }
+
+        .timeline__list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .timeline__item {
+            display: grid;
+            grid-template-columns: 140px 48px 1fr;
+            gap: 0;
+            padding: 48px 0;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .timeline__item:last-child {
+            border-bottom: none;
+        }
+
+        .timeline__date {
+            font-family: var(--font-sans);
+            font-size: var(--type-overline);
+            font-weight: 500;
+            color: hsl(var(--muted-foreground));
+            letter-spacing: 0.05em;
+            padding-top: 4px;
+        }
+
+        .timeline__marker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .timeline__marker::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: hsl(var(--accent));
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px hsl(var(--card));
+        }
+
+        .timeline__marker::after {
+            content: '';
+            flex: 1;
+            width: 1px;
+            background: hsl(var(--border));
+            margin-top: 16px;
+        }
+
+        .timeline__item:last-child .timeline__marker::after {
+            display: none;
+        }
+
+        .timeline__content {
+            padding-left: 24px;
+        }
+
+        .timeline__title {
+            font-family: var(--font-serif);
+            font-size: var(--type-display-s);
+            font-weight: 600;
+            color: hsl(var(--foreground));
+            margin-bottom: 4px;
+        }
+
+        .timeline__company {
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: hsl(var(--primary));
+            margin-bottom: 16px;
+        }
+
+        .timeline__desc {
+            font-size: var(--type-body-m);
+            color: hsl(var(--muted-foreground));
+            max-width: 520px;
+            line-height: 1.7;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           WRITINGS — Editorial cards
+        ═══════════════════════════════════════════════════════════════ */
+
+        .writings {
+            padding: clamp(80px, 12vh, 160px) 0;
+        }
+
+        .writings__grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .writing {
+            display: block;
+            background: hsl(var(--card));
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .writing:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px hsl(var(--primary) / 0.12);
+        }
+
+        .writing__thumbnail {
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-sans);
+            font-size: var(--type-overline);
+            color: hsl(var(--primary-foreground));
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .writing__content {
+            padding: clamp(24px, 3vw, 32px);
+        }
+
+        .writing__meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .writing__date,
+        .writing__source {
+            font-family: var(--font-sans);
+            font-size: var(--type-overline);
+            letter-spacing: 0.05em;
+        }
+
+        .writing__date {
+            color: hsl(var(--muted-foreground));
+        }
+
+        .writing__source {
+            color: hsl(var(--accent));
+            font-weight: 500;
+        }
+
+        .writing__title {
+            font-family: var(--font-serif);
+            font-size: var(--type-display-s);
+            font-weight: 600;
+            color: hsl(var(--foreground));
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .writing__excerpt {
+            font-size: var(--type-caption);
+            color: hsl(var(--muted-foreground));
+            line-height: 1.65;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           CONTACT — Centered minimal
+        ═══════════════════════════════════════════════════════════════ */
+
+        .contact {
+            padding: clamp(100px, 15vh, 200px) 0;
+            text-align: center;
+        }
+
+        .contact__prompt {
+            font-family: var(--font-serif);
+            font-size: var(--type-display-m);
+            font-style: italic;
+            color: hsl(var(--foreground));
+            margin-bottom: 48px;
+        }
+
+        .contact__links {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+        }
+
+        .contact__link {
+            font-family: var(--font-sans);
+            font-size: var(--type-caption);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: hsl(var(--muted-foreground));
+            padding-bottom: 4px;
+            border-bottom: 1px solid transparent;
+            transition: all 0.25s ease;
+        }
+
+        .contact__link:hover {
+            color: hsl(var(--interaction));
+            border-bottom-color: hsl(var(--interaction));
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           FOOTER — Minimal colophon
+        ═══════════════════════════════════════════════════════════════ */
+
+        .colophon {
+            padding: 48px 0;
+            border-top: 1px solid hsl(var(--border));
+            text-align: center;
+        }
+
+        .colophon__text {
+            font-family: var(--font-sans);
+            font-size: var(--type-overline);
+            color: hsl(var(--muted-foreground));
+            letter-spacing: 0.15em;
+            font-weight: 300;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           THEME TOGGLE — Sunrise/Sunset Arc
+        ═══════════════════════════════════════════════════════════════ */
+
+        .theme-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            width: 52px;
+            height: 28px;
+            background: linear-gradient(
+                180deg,
+                hsl(200 60% 85%) 0%,
+                hsl(45 80% 90%) 100%
+            );
+            border: 1px solid hsl(var(--border));
+            border-radius: 100px;
+            cursor: pointer;
+            transition: background 0.6s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 12px hsl(var(--primary) / 0.08);
+            overflow: hidden;
+            padding: 0;
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            background: linear-gradient(
+                180deg,
+                hsl(220 30% 20%) 0%,
+                hsl(250 25% 30%) 100%
+            );
+        }
+
+        .theme-toggle:hover {
+            border-color: hsl(var(--accent));
+            box-shadow: 0 8px 24px hsl(var(--primary) / 0.15);
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle__horizon {
+            position: absolute;
+            bottom: 8px;
+            left: 6px;
+            right: 6px;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                hsl(35 80% 55% / 0.6) 50%,
+                transparent 100%
+            );
+            transition: background 0.6s ease;
+        }
+
+        [data-theme="dark"] .theme-toggle__horizon {
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                hsl(220 40% 50% / 0.4) 50%,
+                transparent 100%
+            );
+        }
+
+        .theme-toggle__arc {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            width: 32px;
+            height: 16px;
+            margin-left: -16px;
+            pointer-events: none;
+        }
+
+        .theme-toggle__sun {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: linear-gradient(
+                135deg,
+                hsl(50 95% 65%) 0%,
+                hsl(40 100% 55%) 100%
+            );
+            box-shadow: 
+                0 0 6px hsl(45 95% 60% / 0.8),
+                0 0 12px hsl(40 100% 55% / 0.4);
+            /* Position at center-bottom of arc container, offset by radius */
+            left: 50%;
+            bottom: 0;
+            margin-left: -6px;
+            /* Arc motion: rotate around a point below the sun */
+            transform-origin: center calc(100% + 10px);
+            transform: rotate(-80deg);
+            transition: transform 0.6s cubic-bezier(0.34, 1.2, 0.64, 1), 
+                        background 0.6s ease, 
+                        box-shadow 0.6s ease;
+        }
+
+        [data-theme="dark"] .theme-toggle__sun {
+            transform: rotate(80deg);
+            background: linear-gradient(
+                135deg,
+                hsl(45 20% 85%) 0%,
+                hsl(220 15% 80%) 100%
+            );
+            box-shadow: 
+                0 0 4px hsl(220 30% 80% / 0.6),
+                0 0 8px hsl(220 20% 70% / 0.3);
+        }
+
+        /* Glow reflection on horizon */
+        .theme-toggle__glow {
+            position: absolute;
+            bottom: 4px;
+            left: 4px;
+            width: 16px;
+            height: 8px;
+            background: radial-gradient(
+                ellipse at center bottom,
+                hsl(45 100% 70% / 0.5) 0%,
+                transparent 70%
+            );
+            transition: all 0.6s cubic-bezier(0.34, 1.2, 0.64, 1);
+            opacity: 1;
+            filter: blur(2px);
+        }
+
+        [data-theme="dark"] .theme-toggle__glow {
+            left: calc(100% - 20px);
+            opacity: 0.4;
+            background: radial-gradient(
+                ellipse at center bottom,
+                hsl(220 40% 75% / 0.3) 0%,
+                transparent 70%
+            );
+        }
+
+        /* Stars in dark mode */
+        .theme-toggle__stars {
+            position: absolute;
+            inset: 4px;
+            opacity: 0;
+            transition: opacity 0.6s ease 0.2s;
+        }
+
+        .theme-toggle__stars::before,
+        .theme-toggle__stars::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: hsl(0 0% 100% / 0.7);
+            border-radius: 50%;
+        }
+
+        .theme-toggle__stars::before {
+            top: 4px;
+            left: 12px;
+            box-shadow: 
+                8px 6px 0 hsl(0 0% 100% / 0.5),
+                20px 2px 0 hsl(0 0% 100% / 0.4);
+        }
+
+        .theme-toggle__stars::after {
+            top: 8px;
+            right: 10px;
+        }
+
+        [data-theme="dark"] .theme-toggle__stars {
+            opacity: 1;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE
+        ═══════════════════════════════════════════════════════════════ */
+
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .hero__image-wrap {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .hero__content {
+                text-align: center;
+            }
+
+            .hero__tagline {
+                margin: 0 auto;
+            }
+
+            .about__grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .about__sidebar {
+                position: static;
+            }
+
+            .notebook__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .project {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .project__link {
+                margin-top: 8px;
+            }
+
+            .timeline__item {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .timeline__marker {
+                display: none;
+            }
+
+            .timeline__content {
+                padding-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .masthead {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .notebook__grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery__grid {
+                grid-template-columns: 1fr;
+                grid-auto-rows: auto;
+            }
+
+            .gallery__item {
+                grid-column: auto !important;
+                grid-row: auto !important;
+                aspect-ratio: 4/3;
+            }
+
+            .education__grid {
+                grid-template-columns: 1fr;
+            }
+
+            .writings__grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact__links {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .about__prose p:first-of-type::first-letter {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero__image-wrap::before {
+                display: none;
+            }
+
+            .theme-toggle {
+                top: 16px;
+                right: 16px;
+                width: 44px;
+                height: 24px;
+            }
+
+            .theme-toggle__sun {
+                width: 10px;
+                height: 10px;
+                margin-left: -5px;
+            }
+
+            .theme-toggle__horizon {
+                bottom: 7px;
+            }
+
+            .theme-toggle__arc {
+                bottom: 7px;
+            }
+
+            .theme-toggle__glow {
+                bottom: 3px;
+                width: 12px;
+                height: 6px;
+            }
+
+            .theme-toggle__stars::before,
+            .theme-toggle__stars::after {
+                width: 1.5px;
+                height: 1.5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Theme Toggle Button — Sunrise/Sunset Arc -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <div class="theme-toggle__stars"></div>
+        <div class="theme-toggle__horizon"></div>
+        <div class="theme-toggle__glow"></div>
+        <div class="theme-toggle__arc">
+            <div class="theme-toggle__sun"></div>
+        </div>
+    </button>
+
+    <div class="container">
+        <header class="masthead">
+            <span class="masthead__name">Shubh Maheshwari</span>
+            <span class="masthead__meta">Est. 2025 · Delhi & California</span>
+        </header>
+    </div>
+
+    <div class="container">
+        <section class="hero">
+            <div class="hero__image-wrap">
+                <div class="hero__image">
+                    <img src="hero-image.png" alt="Shubh at the California coast">
+                </div>
+            </div>
+            <div class="hero__content">
+                <span class="hero__overline">Robotics · Strategy · Systems</span>
+                <h1 class="hero__headline">Building <em>autonomous machines</em> for the real world</h1>
+                <p class="hero__tagline">
+                    Mechanical engineer. Robot wrangler. Photographer. Reader of Tolkien. Watcher of Djokovic.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <section class="about">
+        <div class="container">
+            <div class="about__grid">
+                <aside class="about__sidebar">
+                    <span class="section-label">On the work</span>
+                </aside>
+                <div class="about__prose">
+                    <p>
+                        I work in the founder's office at Ottonomy, a company building L4 autonomous delivery robots. My job is to bridge the gap between what our robots can do and what our customers need them to do—which means closing enterprise deals, managing global deployments, and troubleshooting the thousand ways reality breaks our assumptions.
+                    </p>
+                    <p>
+                        Before this, I led a 40-person student team building Martian rovers, worked on predictive analytics for mining drones, and studied mechanical engineering at BITS Pilani with a focus on robotics.
+                    </p>
+                    <p>
+                        I'm most drawn to problems with physical constraints—systems that need to perform reliably in degraded environments, when no one's watching, when things go wrong.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="notebook">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 48px;">
+                <span class="section-label">From the notebook</span>
+            </div>
+            <div class="notebook__grid">
+                <div class="notebook__entry">
+                    <span class="notebook__label">Reading</span>
+                    <p class="notebook__value"><em>The Return of the King</em> — the annual pilgrimage to Middle-earth</p>
+                </div>
+                <div class="notebook__entry">
+                    <span class="notebook__label">Watching</span>
+                    <p class="notebook__value"><em>Novak Djokovic</em> — 24 and counting</p>
+                </div>
+                <div class="notebook__entry">
+                    <span class="notebook__label">Thinking About</span>
+                    <p class="notebook__value">Graceful degradation in autonomous systems</p>
+                </div>
+                <div class="notebook__entry">
+                    <span class="notebook__label">Located</span>
+                    <p class="notebook__value">Somewhere on the Delhi–San Mateo axis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects">
+        <div class="container">
+            <span class="section-label">Currently tinkering</span>
+            <div class="projects__list">
+                <article class="project">
+                    <span class="project__status">In Progress</span>
+                    <div class="project__content">
+                        <h3 class="project__title">Project Name Here</h3>
+                        <p class="project__desc">A short description of what you're building, why it matters, and what stage it's at.</p>
+                    </div>
+                    <a href="#" class="project__link">GitHub</a>
+                </article>
+                <article class="project">
+                    <span class="project__status">Exploring</span>
+                    <div class="project__content">
+                        <h3 class="project__title">Another Project</h3>
+                        <p class="project__desc">Another thing you're working on. Could be a side project, an experiment, or something you're learning.</p>
+                    </div>
+                    <a href="#" class="project__link">Read more</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery">
+        <div class="container">
+            <div style="text-align: center;">
+                <span class="section-label">Through the lens</span>
+            </div>
+            <p class="gallery__intro">
+                Capturing moments, mostly on film. California light, quiet streets, the in-between.
+            </p>
+            <div class="gallery__grid">
+                <div class="gallery__item gallery__item--1">Photo 1</div>
+                <div class="gallery__item gallery__item--2">Photo 2</div>
+                <div class="gallery__item gallery__item--3">Photo 3</div>
+                <div class="gallery__item gallery__item--4">Photo 4</div>
+                <div class="gallery__item gallery__item--5">Photo 5</div>
+                <div class="gallery__item gallery__item--6">Photo 6</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="education">
+        <div class="container">
+            <span class="section-label">Education</span>
+            <div class="education__grid">
+                <article class="education__card">
+                    <h3 class="education__degree">B.E. Mechanical Engineering</h3>
+                    <p class="education__school">BITS Pilani KK Birla Goa Campus</p>
+                    <p class="education__meta">Oct 2021 – Jun 2025 · Minor in Robotics & Automation</p>
+                </article>
+                <article class="education__card">
+                    <h3 class="education__degree">Entrepreneurship Program</h3>
+                    <p class="education__school">Draper University, California</p>
+                    <p class="education__meta">Selected to represent Ottonomy at Tim Draper's accelerator</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline">
+        <div class="container container--narrow">
+            <div style="text-align: center; margin-bottom: 64px;">
+                <span class="section-label">The record</span>
+            </div>
+            <div class="timeline__list">
+                <article class="timeline__item">
+                    <span class="timeline__date">2025 – Present</span>
+                    <div class="timeline__marker"></div>
+                    <div class="timeline__content">
+                        <h3 class="timeline__title">Founders Office Associate</h3>
+                        <p class="timeline__company">Ottonomy</p>
+                        <p class="timeline__desc">
+                            Strategic partner to the CEO on global operations and Series A fundraising. Closed $100k+ in enterprise deals. Led US expansion from Tim Draper's accelerator.
+                        </p>
+                    </div>
+                </article>
+                <article class="timeline__item">
+                    <span class="timeline__date">2024</span>
+                    <div class="timeline__marker"></div>
+                    <div class="timeline__content">
+                        <h3 class="timeline__title">Product Manager & Strategy</h3>
+                        <p class="timeline__company">CrystalBall</p>
+                        <p class="timeline__desc">
+                            Forward deployed engineering for industrial drones. Built an AI analytics MVP achieving 92% prediction accuracy for mining operations.
+                        </p>
+                    </div>
+                </article>
+                <article class="timeline__item">
+                    <span class="timeline__date">2023 – 2024</span>
+                    <div class="timeline__marker"></div>
+                    <div class="timeline__content">
+                        <h3 class="timeline__title">Team Captain</h3>
+                        <p class="timeline__company">Project Kratos</p>
+                        <p class="timeline__desc">
+                            Led a 40-person cross-functional team building autonomous ground vehicles. Ranked 7th globally at the International Martian Rover Challenge.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="writings">
+        <div class="container">
+            <span class="section-label">Writings</span>
+            <div class="writings__grid">
+                <a href="#" class="writing">
+                    <div class="writing__thumbnail">Preview</div>
+                    <div class="writing__content">
+                        <div class="writing__meta">
+                            <span class="writing__date">Jan 2025</span>
+                            <span class="writing__source">Substack</span>
+                        </div>
+                        <h3 class="writing__title">Your Article Title Here</h3>
+                        <p class="writing__excerpt">A brief preview of what this piece is about. The first sentences that hook the reader...</p>
+                    </div>
+                </a>
+                <a href="#" class="writing">
+                    <div class="writing__thumbnail">Preview</div>
+                    <div class="writing__content">
+                        <div class="writing__meta">
+                            <span class="writing__date">Dec 2024</span>
+                            <span class="writing__source">Substack</span>
+                        </div>
+                        <h3 class="writing__title">Another Article Title</h3>
+                        <p class="writing__excerpt">Another preview excerpt. Keep these to 2-3 lines so they stay inviting...</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="container">
+            <p class="contact__prompt">Say hello, talk robots, argue about tennis.</p>
+            <div class="contact__links">
+                <a href="mailto:hello@shubhmaheshwari.com" class="contact__link">Email</a>
+                <a href="https://linkedin.com/in/shubhmaheshwari" target="_blank" class="contact__link">LinkedIn</a>
+                <a href="https://github.com/shubhmaheshwari" target="_blank" class="contact__link">GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="colophon">
+        <div class="container">
+            <p class="colophon__text">Set in Cormorant Garamond & Outfit · Made with care · MMXXV</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            const toggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            
+            // Check for saved theme preference or default to system preference
+            const getPreferredTheme = () => {
+                const saved = localStorage.getItem('theme');
+                if (saved) return saved;
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            };
+            
+            // Apply theme
+            const setTheme = (theme) => {
+                html.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+            };
+            
+            // Initialize
+            setTheme(getPreferredTheme());
+            
+            // Toggle handler
+            toggle.addEventListener('click', () => {
+                const current = html.getAttribute('data-theme');
+                setTheme(current === 'dark' ? 'light' : 'dark');
+            });
+            
+            // Listen for system preference changes
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (!localStorage.getItem('theme')) {
+                    setTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>
