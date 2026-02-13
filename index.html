@@ -420,7 +420,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
-           GALLERY — Masonry-inspired offset grid
+           GALLERY — Masonry-inspired offset grid (FIXED)
         ═══════════════════════════════════════════════════════════════ */
 
         .gallery {
@@ -449,14 +449,6 @@
             border-radius: var(--radius);
             overflow: hidden;
             background: hsl(var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-sans);
-            font-size: var(--type-overline);
-            color: hsl(var(--muted-foreground));
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -467,6 +459,14 @@
             z-index: 10;
         }
 
+        .gallery__item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Masonry layout positions - each item gets unique placement */
         .gallery__item--1 { grid-column: 1 / 6; grid-row: span 4; }
         .gallery__item--2 { grid-column: 6 / 10; grid-row: span 3; }
         .gallery__item--3 { grid-column: 10 / 13; grid-row: span 5; }
@@ -625,7 +625,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
-           WRITINGS — Editorial cards
+           WRITINGS — Editorial cards (FIXED IMAGE SIZING)
         ═══════════════════════════════════════════════════════════════ */
 
         .writings {
@@ -662,6 +662,15 @@
             color: hsl(var(--primary-foreground));
             letter-spacing: 0.1em;
             text-transform: uppercase;
+            overflow: hidden;
+        }
+
+        /* Fixed: Ensure images inside thumbnail respect aspect ratio */
+        .writing__thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .writing__content {
@@ -849,11 +858,9 @@
             box-shadow: 
                 0 0 6px hsl(45 95% 60% / 0.8),
                 0 0 12px hsl(40 100% 55% / 0.4);
-            /* Position at center-bottom of arc container, offset by radius */
             left: 50%;
             bottom: 0;
             margin-left: -6px;
-            /* Arc motion: rotate around a point below the sun */
             transform-origin: center calc(100% + 10px);
             transform: rotate(-80deg);
             transition: transform 0.6s cubic-bezier(0.34, 1.2, 0.64, 1), 
@@ -873,7 +880,6 @@
                 0 0 8px hsl(220 20% 70% / 0.3);
         }
 
-        /* Glow reflection on horizon */
         .theme-toggle__glow {
             position: absolute;
             bottom: 4px;
@@ -900,7 +906,6 @@
             );
         }
 
-        /* Stars in dark mode */
         .theme-toggle__stars {
             position: absolute;
             inset: 4px;
@@ -1136,23 +1141,8 @@
             <div style="text-align: center; margin-bottom: 48px;">
                 <span class="section-label">From the notebook</span>
             </div>
-            <div class="notebook__grid">
-                <div class="notebook__entry">
-                    <span class="notebook__label">Reading</span>
-                    <p class="notebook__value"><em>The Return of the King</em> — the annual pilgrimage to Middle-earth</p>
-                </div>
-                <div class="notebook__entry">
-                    <span class="notebook__label">Watching</span>
-                    <p class="notebook__value"><em>Novak Djokovic</em> — 24 and counting</p>
-                </div>
-                <div class="notebook__entry">
-                    <span class="notebook__label">Thinking About</span>
-                    <p class="notebook__value">Full stack robotics company of the future</p>
-                </div>
-                <div class="notebook__entry">
-                    <span class="notebook__label">Located</span>
-                    <p class="notebook__value">Somewhere on the Delhi–San Mateo axis</p>
-                </div>
+            <div class="notebook__grid" id="notebook-grid">
+                <!-- Notebook entries are rendered by JavaScript from SITE_DATA -->
             </div>
         </div>
     </section>
@@ -1160,23 +1150,8 @@
     <section class="projects">
         <div class="container">
             <span class="section-label">Currently tinkering</span>
-            <div class="projects__list">
-                <article class="project">
-                    <span class="project__status">In Progress</span>
-                    <div class="project__content">
-                        <h3 class="project__title">Project Name Here</h3>
-                        <p class="project__desc">A short description of what you're building, why it matters, and what stage it's at.</p>
-                    </div>
-                    <a href="#" class="project__link">GitHub</a>
-                </article>
-                <article class="project">
-                    <span class="project__status">Exploring</span>
-                    <div class="project__content">
-                        <h3 class="project__title">Another Project</h3>
-                        <p class="project__desc">Another thing you're working on. Could be a side project, an experiment, or something you're learning.</p>
-                    </div>
-                    <a href="#" class="project__link">Read more</a>
-                </article>
+            <div class="projects__list" id="projects-list">
+                <!-- Projects are rendered by JavaScript from SITE_DATA -->
             </div>
         </div>
     </section>
@@ -1189,25 +1164,8 @@
             <p class="gallery__intro">
                 Capturing moments. Pacific blues, quiet mountains, the in-between.
             </p>
-            <div class="gallery__grid">
-                <div class="gallery__item gallery__item--1">
-                    <img src="gallery-1.jpg" style="width:100%; height:100%; object-fit:cover;" alt="Description of photo">
-                </div>
-                <div class="gallery__item gallery__item--1">
-                    <img src="gallery-2.jpeg" style="width:100%; height:100%; object-fit:cover;" alt="Description of photo">
-                </div>
-                <div class="gallery__item gallery__item--1">
-                    <img src="gallery-3.jpeg" style="width:100%; height:100%; object-fit:cover;" alt="Description of photo">
-                </div>
-                <div class="gallery__item gallery__item--1">
-                    <img src="gallery-4.jpeg" style="width:100%; height:100%; object-fit:cover;" alt="Description of photo">
-                </div>
-                <div class="gallery__item gallery__item--1">
-                    <img src="gallery-5.jpg" style="width:100%; height:100%; object-fit:cover;" alt="Description of photo">
-                </div>
-                <div class="gallery__item gallery__item--1">
-                    <img src="gallery-6.jpg" style="width:100%; height:100%; object-fit:cover;" alt="Description of photo">
-                </div>
+            <div class="gallery__grid" id="gallery-grid">
+                <!-- Gallery items are rendered by JavaScript from SITE_DATA -->
             </div>
         </div>
     </section>
@@ -1215,17 +1173,8 @@
     <section class="education">
         <div class="container">
             <span class="section-label">Education</span>
-            <div class="education__grid">
-                <article class="education__card">
-                    <h3 class="education__degree">B.E. Mechanical Engineering</h3>
-                    <p class="education__school">BITS Pilani KK Birla Goa Campus</p>
-                    <p class="education__meta">Oct 2021 – Jun 2025 · Minor in Robotics & Automation</p>
-                </article>
-                <article class="education__card">
-                    <h3 class="education__degree">Entrepreneurship Program</h3>
-                    <p class="education__school">Draper University, California</p>
-                    <p class="education__meta">Selected to represent Ottonomy at Tim Draper's accelerator</p>
-                </article>
+            <div class="education__grid" id="education-grid">
+                <!-- Education cards are rendered by JavaScript from SITE_DATA -->
             </div>
         </div>
     </section>
@@ -1235,40 +1184,8 @@
             <div style="text-align: center; margin-bottom: 64px;">
                 <span class="section-label">The record</span>
             </div>
-            <div class="timeline__list">
-                <article class="timeline__item">
-                    <span class="timeline__date">2025 – Present</span>
-                    <div class="timeline__marker"></div>
-                    <div class="timeline__content">
-                        <h3 class="timeline__title">Founders Office Associate</h3>
-                        <p class="timeline__company">Ottonomy</p>
-                        <p class="timeline__desc">
-                            Strategic partner to the CEO on global operations and Series A fundraising. Closed $100k+ in enterprise deals. Led US expansion from Tim Draper's accelerator.
-                        </p>
-                    </div>
-                </article>
-                <article class="timeline__item">
-                    <span class="timeline__date">2024</span>
-                    <div class="timeline__marker"></div>
-                    <div class="timeline__content">
-                        <h3 class="timeline__title">Product Manager & Strategy</h3>
-                        <p class="timeline__company">CrystalBall</p>
-                        <p class="timeline__desc">
-                            Forward deployed engineering for industrial drones. Built an AI analytics MVP achieving 92% prediction accuracy for mining operations.
-                        </p>
-                    </div>
-                </article>
-                <article class="timeline__item">
-                    <span class="timeline__date">2023 – 2024</span>
-                    <div class="timeline__marker"></div>
-                    <div class="timeline__content">
-                        <h3 class="timeline__title">Team Captain</h3>
-                        <p class="timeline__company">Project Kratos</p>
-                        <p class="timeline__desc">
-                            Led a 40-person cross-functional team building autonomous ground vehicles. Ranked 7th globally at the International Martian Rover Challenge.
-                        </p>
-                    </div>
-                </article>
+            <div class="timeline__list" id="timeline-list">
+                <!-- Timeline items are rendered by JavaScript from SITE_DATA -->
             </div>
         </div>
     </section>
@@ -1276,29 +1193,8 @@
     <section class="writings">
         <div class="container">
             <span class="section-label">Writings</span>
-            <div class="writings__grid">
-                <a href="https://open.substack.com/pub/shubhstac/p/lessons-from-scaling-silicon-valets?r=3ieyaq&utm_campaign=post&utm_medium=web" class="writing" target="_blank">
-                    <img src="https://substackcdn.com/image/fetch/$s_!21kn!,w_2500,h_1666,c_fill,f_webp,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffb0a92fe-9a38-4c0a-80d4-407122ec75b0_6240x4160.jpeg" class="writing__thumbnail" style="object-fit: cover;" alt="Article cover">
-                    <div class="writing__content">
-                        <div class="writing__meta">
-                            <span class="writing__date">Feb 2026</span>
-                            <span class="writing__source">Substack</span>
-                        </div>
-                        <h3 class="writing__title">Why Most Delivery Robots Fail</h3>
-                        <p class="writing__excerpt">Exploring the edge cases in L4 autonomy that break standard assumptions in unstructured environments.</p>
-                    </div>
-                </a>
-                <!-- <a href="#" class="writing">
-                    <div class="writing__thumbnail">Preview</div>
-                    <div class="writing__content">
-                        <div class="writing__meta">
-                            <span class="writing__date">Dec 2024</span>
-                            <span class="writing__source">Substack</span>
-                        </div>
-                        <h3 class="writing__title">Another Article Title</h3>
-                        <p class="writing__excerpt">Another preview excerpt. Keep these to 2-3 lines so they stay inviting...</p>
-                    </div>
-                </a> -->
+            <div class="writings__grid" id="writings-grid">
+                <!-- Writings are rendered by JavaScript from SITE_DATA -->
             </div>
         </div>
     </section>
@@ -1306,10 +1202,8 @@
     <section class="contact">
         <div class="container">
             <p class="contact__prompt">Say hello, talk robots, argue about tennis.</p>
-            <div class="contact__links">
-                <a href="mailto:maheshwarishubh2002@gmail.com" class="contact__link">Email</a>
-                <a href="https://linkedin.com/in/shubhmaheshwari" target="_blank" class="contact__link">LinkedIn</a>
-                <a href="https://github.com/shhubbh" target="_blank" class="contact__link">GitHub</a>
+            <div class="contact__links" id="contact-links">
+                <!-- Contact links are rendered by JavaScript from SITE_DATA -->
             </div>
         </div>
     </section>
@@ -1321,39 +1215,267 @@
     </footer>
 
     <script>
-        (function() {
-            const toggle = document.getElementById('themeToggle');
-            const html = document.documentElement;
-            
-            // Check for saved theme preference or default to system preference
-            const getPreferredTheme = () => {
-                const saved = localStorage.getItem('theme');
-                if (saved) return saved;
-                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            };
-            
-            // Apply theme
-            const setTheme = (theme) => {
-                html.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-            };
-            
-            // Initialize
-            setTheme(getPreferredTheme());
-            
-            // Toggle handler
-            toggle.addEventListener('click', () => {
-                const current = html.getAttribute('data-theme');
-                setTheme(current === 'dark' ? 'light' : 'dark');
-            });
-            
-            // Listen for system preference changes
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                if (!localStorage.getItem('theme')) {
-                    setTheme(e.matches ? 'dark' : 'light');
-                }
-            });
-        })();
+    /* ═══════════════════════════════════════════════════════════════════════
+       SITE DATA — Edit this section to update your content!
+       ═══════════════════════════════════════════════════════════════════════ */
+    
+    const SITE_DATA = {
+        
+        // ─────────────────────────────────────────────────────────────────────
+        // NOTEBOOK — Quick status updates (Reading, Watching, etc.)
+        // ─────────────────────────────────────────────────────────────────────
+        notebook: [
+            { label: "Reading", value: "<em>The Return of the King</em> — the annual pilgrimage to Middle-earth" },
+            { label: "Watching", value: "<em>Novak Djokovic</em> — 24 and counting" },
+            { label: "Thinking About", value: "Full stack robotics company of the future" },
+            { label: "Located", value: "Somewhere on the Delhi–San Mateo axis" }
+        ],
+
+        // ─────────────────────────────────────────────────────────────────────
+        // PROJECTS — Current side projects or things you're building
+        // ─────────────────────────────────────────────────────────────────────
+        projects: [
+            {
+                status: "In Progress",
+                title: "Project Name Here",
+                description: "A short description of what you're building, why it matters, and what stage it's at.",
+                linkText: "GitHub",
+                linkUrl: "#"
+            },
+            {
+                status: "Exploring",
+                title: "Another Project",
+                description: "Another thing you're working on. Could be a side project, an experiment, or something you're learning.",
+                linkText: "Read more",
+                linkUrl: "#"
+            }
+        ],
+
+        // ─────────────────────────────────────────────────────────────────────
+        // GALLERY — Photos (max 6 for the masonry grid layout)
+        // ─────────────────────────────────────────────────────────────────────
+        gallery: [
+            { src: "gallery-1.jpg", alt: "Description of photo 1" },
+            { src: "gallery-2.jpeg", alt: "Description of photo 2" },
+            { src: "gallery-3.jpeg", alt: "Description of photo 3" },
+            { src: "gallery-4.jpeg", alt: "Description of photo 4" },
+            { src: "gallery-5.jpg", alt: "Description of photo 5" },
+            { src: "gallery-6.jpg", alt: "Description of photo 6" }
+        ],
+
+        // ─────────────────────────────────────────────────────────────────────
+        // EDUCATION — Academic credentials
+        // ─────────────────────────────────────────────────────────────────────
+        education: [
+            {
+                degree: "B.E. Mechanical Engineering",
+                school: "BITS Pilani KK Birla Goa Campus",
+                meta: "Oct 2021 – Jun 2025 · Minor in Robotics & Automation"
+            },
+            {
+                degree: "Entrepreneurship Program",
+                school: "Draper University, California",
+                meta: "Selected to represent Ottonomy at Tim Draper's accelerator"
+            }
+        ],
+
+        // ─────────────────────────────────────────────────────────────────────
+        // TIMELINE — Work experience (most recent first)
+        // ─────────────────────────────────────────────────────────────────────
+        timeline: [
+            {
+                date: "2025 – Present",
+                title: "Founders Office Associate",
+                company: "Ottonomy",
+                description: "Strategic partner to the CEO on global operations and Series A fundraising. Closed $100k+ in enterprise deals. Led US expansion from Tim Draper's accelerator."
+            },
+            {
+                date: "2024",
+                title: "Product Manager & Strategy",
+                company: "CrystalBall",
+                description: "Forward deployed engineering for industrial drones. Built an AI analytics MVP achieving 92% prediction accuracy for mining operations."
+            },
+            {
+                date: "2023 – 2024",
+                title: "Team Captain",
+                company: "Project Kratos",
+                description: "Led a 40-person cross-functional team building autonomous ground vehicles. Ranked 7th globally at the International Martian Rover Challenge."
+            }
+        ],
+
+        // ─────────────────────────────────────────────────────────────────────
+        // WRITINGS — Blog posts, articles, Substack pieces
+        // ─────────────────────────────────────────────────────────────────────
+        writings: [
+            {
+                url: "https://open.substack.com/pub/shubhstac/p/lessons-from-scaling-silicon-valets?r=3ieyaq&utm_campaign=post&utm_medium=web",
+                // For images: use a reasonable sized image, NOT the full-size URL
+                // The image will be cropped to 16:9 aspect ratio automatically
+                image: "https://substackcdn.com/image/fetch/w_800,h_450,c_fill,f_webp,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffb0a92fe-9a38-4c0a-80d4-407122ec75b0_6240x4160.jpeg",
+                date: "Feb 2026",
+                source: "Substack",
+                title: "Why Most Delivery Robots Fail",
+                excerpt: "Exploring the edge cases in L4 autonomy that break standard assumptions in unstructured environments."
+            }
+            // Add more writings here:
+            // {
+            //     url: "#",
+            //     image: null, // Set to null for gradient placeholder
+            //     date: "Dec 2024",
+            //     source: "Substack",
+            //     title: "Another Article Title",
+            //     excerpt: "Another preview excerpt..."
+            // }
+        ],
+
+        // ─────────────────────────────────────────────────────────────────────
+        // CONTACT — Social links
+        // ─────────────────────────────────────────────────────────────────────
+        contact: [
+            { label: "Email", url: "mailto:maheshwarishubh2002@gmail.com" },
+            { label: "LinkedIn", url: "https://linkedin.com/in/shubhmaheshwari" },
+            { label: "GitHub", url: "https://github.com/shhubbh" }
+        ]
+    };
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       RENDERING FUNCTIONS — Don't edit unless you know what you're doing!
+       ═══════════════════════════════════════════════════════════════════════ */
+
+    function renderNotebook() {
+        const container = document.getElementById('notebook-grid');
+        container.innerHTML = SITE_DATA.notebook.map(item => `
+            <div class="notebook__entry">
+                <span class="notebook__label">${item.label}</span>
+                <p class="notebook__value">${item.value}</p>
+            </div>
+        `).join('');
+    }
+
+    function renderProjects() {
+        const container = document.getElementById('projects-list');
+        container.innerHTML = SITE_DATA.projects.map(item => `
+            <article class="project">
+                <span class="project__status">${item.status}</span>
+                <div class="project__content">
+                    <h3 class="project__title">${item.title}</h3>
+                    <p class="project__desc">${item.description}</p>
+                </div>
+                <a href="${item.linkUrl}" class="project__link">${item.linkText}</a>
+            </article>
+        `).join('');
+    }
+
+    function renderGallery() {
+        const container = document.getElementById('gallery-grid');
+        container.innerHTML = SITE_DATA.gallery.slice(0, 6).map((item, index) => `
+            <div class="gallery__item gallery__item--${index + 1}">
+                <img src="${item.src}" alt="${item.alt}" loading="lazy">
+            </div>
+        `).join('');
+    }
+
+    function renderEducation() {
+        const container = document.getElementById('education-grid');
+        container.innerHTML = SITE_DATA.education.map(item => `
+            <article class="education__card">
+                <h3 class="education__degree">${item.degree}</h3>
+                <p class="education__school">${item.school}</p>
+                <p class="education__meta">${item.meta}</p>
+            </article>
+        `).join('');
+    }
+
+    function renderTimeline() {
+        const container = document.getElementById('timeline-list');
+        container.innerHTML = SITE_DATA.timeline.map((item, index) => `
+            <article class="timeline__item">
+                <span class="timeline__date">${item.date}</span>
+                <div class="timeline__marker"></div>
+                <div class="timeline__content">
+                    <h3 class="timeline__title">${item.title}</h3>
+                    <p class="timeline__company">${item.company}</p>
+                    <p class="timeline__desc">${item.description}</p>
+                </div>
+            </article>
+        `).join('');
+    }
+
+    function renderWritings() {
+        const container = document.getElementById('writings-grid');
+        container.innerHTML = SITE_DATA.writings.map(item => `
+            <a href="${item.url}" class="writing" target="_blank">
+                <div class="writing__thumbnail">
+                    ${item.image 
+                        ? `<img src="${item.image}" alt="${item.title} cover">`
+                        : 'Preview'
+                    }
+                </div>
+                <div class="writing__content">
+                    <div class="writing__meta">
+                        <span class="writing__date">${item.date}</span>
+                        <span class="writing__source">${item.source}</span>
+                    </div>
+                    <h3 class="writing__title">${item.title}</h3>
+                    <p class="writing__excerpt">${item.excerpt}</p>
+                </div>
+            </a>
+        `).join('');
+    }
+
+    function renderContact() {
+        const container = document.getElementById('contact-links');
+        container.innerHTML = SITE_DATA.contact.map(item => `
+            <a href="${item.url}" class="contact__link" ${item.url.startsWith('http') ? 'target="_blank"' : ''}>${item.label}</a>
+        `).join('');
+    }
+
+    // Initialize all sections
+    function initializeSite() {
+        renderNotebook();
+        renderProjects();
+        renderGallery();
+        renderEducation();
+        renderTimeline();
+        renderWritings();
+        renderContact();
+    }
+
+    // Run on page load
+    document.addEventListener('DOMContentLoaded', initializeSite);
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       THEME TOGGLE
+       ═══════════════════════════════════════════════════════════════════════ */
+
+    (function() {
+        const toggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        const getPreferredTheme = () => {
+            const saved = localStorage.getItem('theme');
+            if (saved) return saved;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        };
+        
+        const setTheme = (theme) => {
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        };
+        
+        setTheme(getPreferredTheme());
+        
+        toggle.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    })();
     </script>
 
 </body>
